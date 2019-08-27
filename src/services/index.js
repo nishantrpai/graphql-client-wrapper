@@ -21,13 +21,35 @@ export function getAllPosts() {
     `
     client.query({ query: postsQuery })
       .then(response => {
-        console.log(response.data);
         resolve(response.data);
       })
       .catch(err => {
-        console.log(err);
         reject([]);
       })
   });
 }
 
+export function getPost(id) {
+  return new Promise(function (resolve, reject) {
+    const postsQuery = gql`
+      query postsQuery {
+        post @rest(type: "[Post]", path: "/posts/${id}") {
+          id
+          userId @export(as: "id")
+          title
+          body
+          user @rest(type: "User", path: "/users/{exportVariables.id}") {
+            name
+          }
+        }
+      }
+    `
+    client.query({ query: postsQuery })
+      .then(response => {
+        resolve(response.data);
+      })
+      .catch(err => {
+        reject([]);
+      })
+  });
+}
