@@ -1,26 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { RestLink } from 'apollo-link-rest';
+// setup your `RestLink` with your endpoint
+import Posts from '../src/containers/Posts';
 import './App.css';
+const restLink = new RestLink({ uri: "https://jsonplaceholder.typicode.com/" });
+const client = new ApolloClient({
+  link: restLink,
+  cache: new InMemoryCache(),
+});
+
+function getAllPosts(){
+  
+}
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Posts/>
     </div>
   );
 }
+
+const 
 
 export default App;
