@@ -1,28 +1,30 @@
 import React from 'react';
-import { ApolloClient } from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { RestLink } from 'apollo-link-rest';
-// setup your `RestLink` with your endpoint
-import Posts from '../src/containers/Posts';
+import Posts from './containers/Posts';
+import { getAllPosts } from './services';
 import './App.css';
-const restLink = new RestLink({ uri: "https://jsonplaceholder.typicode.com/" });
-const client = new ApolloClient({
-  link: restLink,
-  cache: new InMemoryCache(),
-});
 
-function getAllPosts(){
-  
+class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      posts: []
+    }
+  }
+
+  componentDidMount() {
+    getAllPosts().then(data => { this.setState({ posts: data.posts }) });
+  }
+
+  render() {
+    console.log(this.state.posts);
+    return (
+      <div className="App">
+        <Posts posts={this.state.posts} />
+      </div>
+    );
+  }
 }
 
-function App() {
-  return (
-    <div className="App">
-      <Posts/>
-    </div>
-  );
-}
-
-const 
 
 export default App;
