@@ -7,7 +7,7 @@ class Post extends React.Component {
     this.state = {
       post: {
         id: '',
-        title: '',
+        title: 'Loading...',
         body: '',
         user: {
           name: ''
